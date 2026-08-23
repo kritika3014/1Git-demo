@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container wide">
+    <button class="back-btn" onclick="location.href='index.html'"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <h1><i class="fa-solid fa-chart-line"></i> Smart Analytics</h1>
+    <div id="reportArea"></div>
+    <div class="chart-box"><canvas id="barChart"></canvas></div>
+    <div class="share-box">
+      <button class="whatsapp-btn" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</button>
+      <button class="download-btn" onclick="location.href='index.html'"><i class="fa-solid fa-plus"></i> Add More</button>
+    </div>
+  </div>
+<script>
+let subjects = JSON.parse(localStorage.getItem('bunkSubjects')) || [];
+let last = subjects[subjects.length-1];
+if (last) {
+  let perTillNow = ((last.attended / last.total) * 100).toFixed(1);
+  let weekPer = last.weekTotal ? ((last.weekAtt / last.weekTotal) * 100).toFixed(0) : 0;
+  document.getElementById('reportArea').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card blue"><i class="fa-solid fa-layer-group"></i><h3>${last.totalSem}</h3><p>Total in Sem</p></div>
+      <div class="stat-card green"><i class="fa-solid fa-user-check"></i><h3>${last.attended}</h3><p>Attended (${perTillNow}%)</p></div>
+      <div class="stat-card red"><i class="fa-solid fa-user-xmark"></i><h3>${last.absentTillNow}</h3><p>Total Absent</p></div>
+      <div class="stat-card orange"><i class="fa-solid fa-bed"></i><h3>${last.maxBunkWholeSem}</h3><p>Max Bunk Whole Sem</p></div>
+    </div>
+    <div class="detail-card">
+      <h3><i class="fa-solid fa-book"></i> ${last.name} - Target ${last.targetPer}%</h3>
+      <p>📚 <b>Total Sem:</b> ${last.totalSem} classes</p>
+      <p>🎯 <b>Required for ${last.targetPer}%:</b> <b>${last.requiredForTarget}</b> classes</p>
+      <p>🏖️ <b>You can bunk total:</b> <b style="font-size:20px; color:#e67e22;">${last.maxBunkWholeSem} classes</b> in whole sem</p>
+      <hr style="border:1px dashed #ddd;">
+      <p>📅 <b>This Week:</b> ${last.weekTotal} classes → Attended ${last.weekAtt}, Absent ${last.weekAbsent} (${weekPer}%)</p>
+      <p>📊 <b>Till Now:</b> ${last.attended}/${last.total} → Absent ${last.absentTillNow}</p>
+      <p>📈 <b>Remaining:</b> ${last.remainingClasses} classes left</p>
+      <p>✅ <b>Need to attend:</b> <b>${last.mustAttendInFuture}</b> more from remaining</p>
+      <p style="background:${last.canBunkInFuture>0?'#d4edda':'#f8d7da'}; padding:10px; border-radius:8px; font-weight:bold; color:${last.canBunkInFuture>0?'#155724':'#721c24'};">
+        ${last.canBunkInFuture>0 ? `🎉 You can still bunk ${last.canBunkInFuture} classes` : `⚠️ Cannot bunk! Attend next ${last.mustAttendInFuture} classes`}
+      </p>
+    </div>
+  `;
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: { labels: ['Attended','Absent','Must Attend','Can Bunk'], datasets: [{ data: [last.attended, last.absentTillNow, last.mustAttendInFuture, last.canBunkInFuture], backgroundColor: ['#2ecc71','#ff4757','#3498db','#f1c40f'], borderRadius: 8 }] },
+    options: { plugins: { legend: { display: false } } }
+  });
+}
+function shareWhatsApp() {
+  if(!last) return;
+  let text = `🎓 ${last.name} - Bunk Report\nTotal: ${last.totalSem}, Target: ${last.targetPer}%\nAttended: ${last.attended}/${last.total} (${((last.attended/last.total)*100).toFixed(1)}%)\nCan Bunk Total: ${last.maxBunkWholeSem} | Can Bunk Future: ${last.canBunkInFuture}\nNeed to attend: ${last.mustAttendInFuture} more`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+}
+</script>
+</body>
+</html>

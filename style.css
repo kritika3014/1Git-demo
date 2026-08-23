@@ -1,0 +1,24 @@
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height: 100vh; display: flex; justify-content: center; margin: 0; padding: 20px; }
+.container { background: white; padding: 24px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); height: fit-content; }
+.container.wide { max-width: 520px; }
+h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
+.subtitle { text-align: center; color: #888; font-size: 12px; margin-bottom: 15px; }
+.input-box label { font-weight: 600; font-size: 13px; color: #333; display: block; margin-top: 12px; margin-bottom: 4px; }
+input, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background: #f8f9fa; font-size: 14px; }
+.row { display: flex; gap: 10px; } .row div { flex: 1; }
+.divider { text-align: center; margin: 18px 0 5px; font-weight: bold; font-size: 13px; color: #667eea; position: relative; }
+.divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 35%; height: 1px; background: #ddd; }
+.divider::before { left: 0; } .divider::after { right: 0; }
+.submit-end { width: 100%; padding: 14px; background: linear-gradient(135deg,#667eea,#764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 20px; font-size: 16px; }
+.subject-card { background: #f8f9ff; padding: 12px 14px; border-radius: 12px; margin-top: 12px; border-left: 5px solid #667eea; display: flex; justify-content: space-between; align-items: center; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+.stat-card { padding: 16px; border-radius: 14px; text-align: center; color: white; }
+.stat-card i { font-size: 22px; } .stat-card h3 { margin: 8px 0 2px; font-size: 22px; } .stat-card p { margin: 0; font-size: 11px; }
+.blue { background: linear-gradient(135deg,#667eea,#764ba2); } .green { background: linear-gradient(135deg,#2ecc71,#27ae60); } .red { background: linear-gradient(135deg,#ff6b6b,#ee5a52); } .orange { background: linear-gradient(135deg,#f6d365,#fda085); color: #333; }
+.chart-box { background: #f8f9fa; padding: 16px; border-radius: 14px; margin-top: 15px; }
+.detail-card { background: #f8f9ff; padding: 16px; border-radius: 14px; margin-top: 15px; line-height: 1.8; border: 1px solid #e0e6ff; font-size: 14px; }
+.share-box { display: flex; gap: 10px; margin-top: 20px; }
+.whatsapp-btn { background: #25D366; flex: 1; padding: 13px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; }
+.download-btn { background: #2c3e50; flex: 1; padding: 13px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; }
+.back-btn { background: #eee; color: #333; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; width: auto; }
